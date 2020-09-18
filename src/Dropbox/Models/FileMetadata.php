@@ -90,6 +90,13 @@ class FileMetadata extends BaseModel
      */
     protected $has_explicit_shared_members;
 
+    /**
+     * A content hash of the file
+     *
+     * @var string
+     */
+    protected $content_hash;
+
 
     /**
      * Create a new FileMetadata instance
@@ -108,6 +115,7 @@ class FileMetadata extends BaseModel
         $this->client_modified = $this->getDataProperty('client_modified');
         $this->server_modified = $this->getDataProperty('server_modified');
         $this->has_explicit_shared_members = $this->getDataProperty('has_explicit_shared_members');
+        $this->content_hash = $this->getDataProperty('content_hash');
 
         //Make MediaInfo
         $mediaInfo = $this->getDataProperty('media_info');
@@ -230,5 +238,15 @@ class FileMetadata extends BaseModel
     public function hasExplicitSharedMembers()
     {
         return $this->has_explicit_shared_members;
+    }
+
+    /**
+     * Get the 'content_hash' property of the file model.
+     *
+     * @return string
+     */
+    public function getContentHash()
+    {
+        return $this->content_hash;
     }
 }
