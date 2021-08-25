@@ -220,6 +220,17 @@ class DropboxAuthHelper
     }
 
     /**
+     * @param string $refreshToken
+     * @return AccessToken
+     * @throws DropboxClientException
+     */
+    public function refreshAccessToken($refreshToken)
+    {
+        $accessToken = $this->getOAuth2Client()->refreshToken($refreshToken);
+        return new AccessToken($accessToken);
+    }
+
+    /**
      * Get URL State
      *
      * @return string

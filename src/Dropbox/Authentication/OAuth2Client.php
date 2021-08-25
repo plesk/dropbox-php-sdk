@@ -126,35 +126,13 @@ class OAuth2Client
      */
     public function getAccessToken($code, $redirectUri = null, $grant_type = 'authorization_code')
     {
-        //Access Token (Should most probably be null)
-        $accessToken = $this->getApp()->getAccessToken();
-
-        //Request Params
-        $params = [
-        'code' => $code,
-        'grant_type' => $grant_type,
-        'client_id' => $this->getApp()->getClientId(),
-        'client_secret' => $this->getApp()->getClientSecret(),
-        'redirect_uri' => $redirectUri
-        ];
-
-        $params = http_build_query($params);
-
-        $apiUrl = static::AUTH_TOKEN_URL;
-        $uri = $apiUrl . "?" . $params;
-
-        //Send Request through the DropboxClient
-        //Fetch the Response (DropboxRawResponse)
-        $response = $this->getClient()
-        ->getHttpClient()
-        ->send($uri, "POST", null);
-
-        //Fetch Response Body
-        $body = $response->getBody();
-
-        //Decode the Response body to associative array
-        //and return
-        return json_decode((string) $body, true);
+        return $this->getToken([
+            'code' => $code,
+            'grant_type' => $grant_type,
+            'client_id' => $this->getApp()->getClientId(),
+            'client_secret' => $this->getApp()->getClientSecret(),
+            'redirect_uri' => $redirectUri
+        ]);
     }
 
     /**
@@ -177,5 +155,39 @@ class OAuth2Client
 
         //Revoke Access Token
         $response = $this->getClient()->sendRequest($request);
+    }
+
+    /**
+     * @param string $refreshToken
+     * @return array
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     */
+    public function refreshToken($refreshToken)
+    {
+        return $this->getToken([
+            'grant_type' => 'refresh_token',
+            'refresh_token' => $refreshToken,
+            'client_id' => $this->getApp()->getClientId(),
+            'client_secret' => $this->getApp()->getClientSecret(),
+        ]);
+    }
+
+    /**
+     * @param array $params
+     * @return array
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     */
+    private function getToken($params)
+    {
+        $params = http_build_query($params);
+        $uri = self::AUTH_TOKEN_URL . "?" . $params;
+        $response = $this->getClient()
+            ->getHttpClient()
+            ->send($uri, "POST", null);
+        $body = $response->getBody();
+
+        //Decode the Response body to associative array
+        //and return
+        return json_decode((string)$body, true);
     }
 }
