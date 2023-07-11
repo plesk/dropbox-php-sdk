@@ -108,7 +108,7 @@ class DropboxFile
             }
         }
 
-        $this->stream = \GuzzleHttp\Psr7\stream_for(fopen($this->path, $this->mode));
+        $this->stream = \GuzzleHttp\Psr7\Utils::streamFor(fopen($this->path, $this->mode));
 
         if (!$this->stream) {
             throw new DropboxClientException('Failed to create DropboxFile instance. Unable to open resource: ' . $this->path . '.');
