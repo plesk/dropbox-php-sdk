@@ -4,7 +4,6 @@ namespace Kunnu\Dropbox\Http\Clients;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\StreamInterface;
-use GuzzleHttp\Exception\RingException;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
 use Kunnu\Dropbox\Http\DropboxRawResponse;
@@ -56,7 +55,7 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
             $rawResponse = $this->client->send($request, $options);
         } catch (RequestException $e) {
             $rawResponse = $e->getResponse();
-            if ($e->getPrevious() instanceof RingException || !$rawResponse instanceof ResponseInterface) {
+            if (!$rawResponse instanceof ResponseInterface) {
                 if ($requestHasSink && $rawResponse instanceof ResponseInterface) {
                     $this->closeSinkStream($rawResponse);
                 }
