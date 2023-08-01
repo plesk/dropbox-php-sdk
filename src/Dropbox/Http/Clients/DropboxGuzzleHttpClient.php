@@ -92,7 +92,7 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
     {
         $body = $rawResponse->getBody();
         if (property_exists($body, 'stream')) {
-            $body->stream->close();
+            $body->close();
         }
     }
 
