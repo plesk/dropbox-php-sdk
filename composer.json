@@ -11,7 +11,7 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^7.0",
-        "illuminate/collections": "^9.0"
+        "illuminate/collections": "^12.0"
     },
     "autoload": {
         "psr-4": {

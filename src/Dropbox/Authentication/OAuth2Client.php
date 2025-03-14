@@ -51,7 +51,7 @@ class OAuth2Client
      * @param \Kunnu\Dropbox\DropboxClient $client
      * @param \Kunnu\Dropbox\Security\RandomStringGeneratorInterface $randStrGenerator
      */
-    public function __construct(DropboxApp $app, DropboxClient $client, RandomStringGeneratorInterface $randStrGenerator = null)
+    public function __construct(DropboxApp $app, DropboxClient $client, ?RandomStringGeneratorInterface $randStrGenerator = null)
     {
         $this->app = $app;
         $this->client = $client;

@@ -239,7 +239,7 @@ class Dropbox
      *
      * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      */
-    public function sendRequest($method, $endpoint, $endpointType = 'api', array $params = [], $accessToken = null, DropboxFile $responseFile = null, $headers = [])
+    public function sendRequest($method, $endpoint, $endpointType = 'api', array $params = [], $accessToken = null, ?DropboxFile $responseFile = null, $headers = [])
     {
         //Access Token
         $accessToken = $this->getAccessToken() ? $this->getAccessToken() : $accessToken;
@@ -280,7 +280,7 @@ class Dropbox
      *
      * @return \Kunnu\Dropbox\DropboxResponse
      */
-    public function postToContent($endpoint, array $params = [], $accessToken = null, DropboxFile $responseFile = null, $headers = [])
+    public function postToContent($endpoint, array $params = [], $accessToken = null, ?DropboxFile $responseFile = null, $headers = [])
     {
         return $this->sendRequest("POST", $endpoint, 'content', $params, $accessToken, $responseFile, $headers);
     }
