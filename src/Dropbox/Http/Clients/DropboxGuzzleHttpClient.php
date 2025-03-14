@@ -26,7 +26,7 @@ class DropboxGuzzleHttpClient implements DropboxHttpClientInterface
      *
      * @param Client $client GuzzleHttp Client
      */
-    public function __construct(Client $client = null)
+    public function __construct(?Client $client = null)
     {
         //Set the client
         $this->client = $client ?: new Client();
